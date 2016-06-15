@@ -97,7 +97,7 @@ const ScrollableTabView = React.createClass({
   },
 
   renderScrollableContent() {
-    if (Platform.OS === 'ios') {
+    // if (Platform.OS === 'ios') {
       return (
         <ScrollView
           horizontal
@@ -142,31 +142,31 @@ const ScrollableTabView = React.createClass({
           })}
         </ScrollView>
       );
-    } else {
-      return (
-        <ViewPagerAndroid
-         key={this._children().length}
-         style={styles.scrollableContentAndroid}
-         initialPage={this.props.initialPage}
-         onPageSelected={this._updateSelectedPage}
-         keyboardDismissMode="on-drag"
-         scrollEnabled={!this.props.locked}
-         onPageScroll={(e) => {
-           const { offset, position, } = e.nativeEvent;
-           this._updateScrollValue(position + offset);
-         }}
-         ref={(scrollView) => { this.scrollView = scrollView; }}
-         {...this.props.contentProps}>
-         {this._children().map((child, idx) => {
-           return <View
-             key={child.key}
-             style={{width: this.state.containerWidth, }}>
-             {child}
-           </View>;
-         })}
-        </ViewPagerAndroid>
-      );
-    }
+    // } else {
+    //   return (
+    //     <ViewPagerAndroid
+    //     key={this._children().length}
+    //     style={styles.scrollableContentAndroid}
+    //     initialPage={this.props.initialPage}
+    //     onPageSelected={this._updateSelectedPage}
+    //     keyboardDismissMode="on-drag"
+    //     scrollEnabled={!this.props.locked}
+    //     onPageScroll={(e) => {
+    //       const { offset, position, } = e.nativeEvent;
+    //       this._updateScrollValue(position + offset);
+    //     }}
+    //     ref={(scrollView) => { this.scrollView = scrollView; }}
+    //     {...this.props.contentProps}>
+    //     {this._children().map((child, idx) => {
+    //       return <View
+    //         key={child.key}
+    //         style={{width: this.state.containerWidth, }}>
+    //         {child}
+    //       </View>;
+    //     })}
+    //     </ViewPagerAndroid>
+    //   );
+    // }
   },
 
   _updateSelectedPage(currentPage) {
