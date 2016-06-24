@@ -114,10 +114,7 @@ componentDidMount(){
           onScroll={(e) => {
             const offsetX = e.nativeEvent.contentOffset.x;
             this._updateScrollValue(offsetX / this.state.containerWidth);
-              const page = Math.round(offsetX / this.state.containerWidth);
-            if (this.state.currentPage !== page) {
-              this._updateSelectedPage(page);
-            }
+              
           }}
           onMomentumScrollBegin={(e) => {
             const offsetX = e.nativeEvent.contentOffset.x;
