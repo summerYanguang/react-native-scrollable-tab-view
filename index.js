@@ -70,6 +70,7 @@ componentDidMount(){
   },
 
   goToPage(pageNumber) {
+
     this.props.onChangeTab({ i: pageNumber, ref: this._children()[pageNumber], });
 
     // if (Platform.OS === 'ios') {
@@ -114,7 +115,10 @@ componentDidMount(){
           onScroll={(e) => {
             const offsetX = e.nativeEvent.contentOffset.x;
             this._updateScrollValue(offsetX / this.state.containerWidth);
-              
+            // const page = Math.round(offsetX / this.state.containerWidth);
+            // if (this.state.currentPage !== page) {
+            //   this._updateSelectedPage(page);
+            // }
           }}
           onMomentumScrollBegin={(e) => {
             const offsetX = e.nativeEvent.contentOffset.x;
@@ -139,6 +143,9 @@ componentDidMount(){
           keyboardDismissMode="on-drag"
           {...this.props.contentProps}>
           {this._children().map((child, idx) => {
+            if (this.props.initialPage < idx) {
+              return
+            }
             return <View
               key={child.key}
               style={{width: this.state.containerWidth, }}>
@@ -179,6 +186,9 @@ componentDidMount(){
     if (typeof localCurrentPage === 'object') {
       localCurrentPage = currentPage.nativeEvent.position;
     }
+    // if (localCurrentPage<0) {
+    //   return
+    // }
     this.setState({currentPage: localCurrentPage, }, () => {
       this.props.onChangeTab({ i: localCurrentPage, ref: this._children()[localCurrentPage], });
     });
@@ -208,7 +218,7 @@ componentDidMount(){
     let overlayTabs = (this.props.tabBarPosition === 'overlayTop' || this.props.tabBarPosition === 'overlayBottom');
     let tabBarProps = {
       goToPage: this.goToPage,
-      tabs: this._children().map((child) => child.props.tabLabel),
+      tabs: this._children().map((child) => {return {name:child.props.tabLabel,notTap:child.props.notTap}}),
       activeTab: this.state.currentPage,
       scrollValue: this.state.scrollValue,
       containerWidth: this.state.containerWidth,
